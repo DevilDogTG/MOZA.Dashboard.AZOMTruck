@@ -1,0 +1,11 @@
+* text=auto
+
+# MOZA Dashboard Studio owns everything under src/ and rewrites it on save; keep its bytes and line endings
+# exactly as written so a save without changes produces no diff.
+src/** -text
+
+# .mzdash is pretty-printed JSON, so it diffs as text without a driver.
+*.mzdash diff
+
+*.png binary
+*.zip binary

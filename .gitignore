@@ -1,0 +1,6 @@
+# Claude Code desktop worktrees and local settings; no agent state belongs in this repo
+.claude/
+
+# Release assets are built from git, not tracked
+*.zip
+/*.mzdash
