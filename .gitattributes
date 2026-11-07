@@ -8,4 +8,3 @@ src/** -text
 *.mzdash diff
 
 *.png binary
-*.zip binary

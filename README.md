@@ -20,7 +20,7 @@ temperatures, air pressure, warning lights, truck and trailer damage, axle lift,
 | `src/AZOM Truck/1.png` | The preview image Pit House shows |
 | `src/AZOM Truck/Resource/MD5/` | Every image the dashboard uses, named by the MD5 of its content |
 
-Release files are not tracked; they are attached to GitHub releases.
+Release `.mzdash` files are not tracked; they are attached to GitHub releases.
 
 ## Editing with Dashboard Studio
 
@@ -47,12 +47,16 @@ The version is the `"version"` field at the end of `AZOM Truck.mzdash`, `X.Y.Z`,
 | Z | A fix to something that already exists |
 | None | Hidden elements, refactors with no visible change, repo tooling |
 
-Build the release file from the merged commit rather than exporting it from Studio, so it holds exactly the files
-tracked under `src/`. Pit House's import format is not confirmed yet: settle it with a test import before the first
-release. If it takes a zip of the dashboard folder:
+The release file is the `.mzdash` on its own: Pit House and the MOZA SimHub plugin both upload a bare `.mzdash`, not
+a zip, the same way MOZA ships its built-in dashboards. Copy it from a clean checkout of the merged commit rather than
+exporting it from Studio, so it is byte-for-byte what is tracked (a PowerShell `>` redirect of `git show` would
+re-encode it):
 
 ```powershell
-git archive --format=zip -9 -o "AZOM.Truck.v<version>.zip" <commit>:src
+git switch --detach <commit>
+git status --short   # must print nothing
+Copy-Item "src/AZOM Truck/AZOM Truck.mzdash" "AZOM.Truck.v<version>.mzdash"
+git switch main
 ```
 
 Tag that commit and publish the release with the file attached:
@@ -60,7 +64,7 @@ Tag that commit and publish the release with the file attached:
 ```powershell
 git tag -a v<version> <commit> -m "release: v<version>"
 git push origin v<version>
-gh release create v<version> --title "v<version>" --notes-file <notes.md> --verify-tag "AZOM.Truck.v<version>.zip"
+gh release create v<version> --title "v<version>" --notes-file <notes.md> --verify-tag "AZOM.Truck.v<version>.mzdash"
 ```
 
 The release notes state the Pit House version the dashboard was saved with.
