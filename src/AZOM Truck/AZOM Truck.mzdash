@@ -48,106 +48,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/Gear\").value",
-                                "((r=Number(_result))=>{if(isNaN(r))return _result;else if(r==0)return'N';else if(r>0)return r.toString();else if(r==-1)return 'R';else if(r<-1)return 'R'+Math.abs(r).toString();})()"
-                            ],
-                            "type": "METHOD_CHAINING"
-                        }
-                    },
-                    "borderStyle": {
-                        "allBorders": 0,
-                        "allCornerRadius": 0,
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "bordersBottom": 0,
-                        "bordersLeft": 0,
-                        "bordersRight": 0,
-                        "bordersTop": 0,
-                        "radiusBottomLeft": 0,
-                        "radiusBottomRight": 0,
-                        "radiusTopLeft": 0,
-                        "radiusTopRight": 0
-                    },
-                    "children": [
-                    ],
-                    "effect": {
-                        "blinkDelay": 250,
-                        "blinkEnabled": false,
-                        "blurRadius": 0,
-                        "gravitySensorEnabled": false,
-                        "opacity": 100,
-                        "outerShadow": {
-                            "blur": 0,
-                            "color": {
-                                "color": "#00000000",
-                                "type": "SOLID"
-                            },
-                            "depth": 0,
-                            "direction": 0
-                        },
-                        "rotation": 0
-                    },
-                    "general": {
-                        "backgroundColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderRadius": 0,
-                        "borderWidth": 0,
-                        "height": 150,
-                        "locked": false,
-                        "visible": true,
-                        "width": 150,
-                        "x": 550,
-                        "y": 298
-                    },
-                    "id": 15,
-                    "macros": {
-                    },
-                    "name": "Gear Hidden",
-                    "plugins": [
-                    ],
-                    "text": {
-                        "fontColor": {
-                            "color": "#FFFFFFFF",
-                            "type": "SOLID"
-                        },
-                        "fontFamily": "FRIZON",
-                        "fontSize": 90,
-                        "fontWeight": 500,
-                        "horizontalAlignment": "AlignCenter",
-                        "paddingBottom": 0,
-                        "paddingLeft": 0,
-                        "paddingRight": 0,
-                        "paddingTop": 0,
-                        "text": "N",
-                        "verticalAlignment": "AlignCenter",
-                        "wrapText": false
-                    },
-                    "textEffect": {
-                        "shadowBlur": 0,
-                        "shadowColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "shadowDepth": 0,
-                        "shadowDirection": 0
-                    },
-                    "type": "Text.qml"
-                },
-                {
-                    "actions": {
-                    },
-                    "binding": {
-                        "text.text": {
-                            "methods": [
-                                "\n(() => {\n  const gear = Telemetry.get(\"v1/gameData/Gear\")?.value;\n  if (gear == '0') return 'N';\n  if (gear == '-1') return 'R1';\n  if (gear == '-2') return 'R2';\n  if (gear == '-3') return 'R3';\n  if (gear == '-4') return 'R4';\n  return gear;\n})()",
+                                "\n(() => {\n  const gear = Number(Telemetry.get(\"v1/gameData/Gear\")?.value);\n  if (isNaN(gear)) return '';\n  if (gear == 0) return 'N';\n  if (gear < 0) {\n    const totalRvs = Number(Telemetry.get(\"v1/gameData/ReverseGearCount\")?.value);\n    return totalRvs == 1 ? 'R' : 'R' + (-gear);\n  }\n  const totalFwd = Number(Telemetry.get(\"v1/gameData/ForwardGearCount\")?.value);\n  const totalCrawler = totalFwd == 13 ? 1 : (totalFwd == 14 ? 2 : 0);\n  if (gear <= totalCrawler) return 'C' + gear;\n  if (gear >= 10) {\n    // GearRatioType: 1 = direct drive (ratio 1), 2 = overdrive (ratio < 1), worked out SimHub-side.\n    const ratioType = Number(Telemetry.get(\"v1/gameData/GearRatioType\")?.value);\n    if (ratioType == 1) return 'DD';\n    if (ratioType == 2) return 'OD';\n  }\n  return String(gear - totalCrawler);\n})()",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -414,6 +315,500 @@
                     "actions": {
                     },
                     "binding": {
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 24,
+                        "x": 754,
+                        "y": 174
+                    },
+                    "id": 202,
+                    "image": {
+                        "src": "MD5/5dcfcec9a469400ead043b10a52f6da7.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "TrailerDmg No",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 24,
+                        "x": 754,
+                        "y": 198
+                    },
+                    "id": 207,
+                    "image": {
+                        "src": "MD5/5aa7ddf0de2653516388743f59e29ae2.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "TrailerTyreDmg No",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 24,
+                        "x": 754,
+                        "y": 198
+                    },
+                    "id": 204,
+                    "image": {
+                        "src": "MD5/20e658f6de8fc6a9a3611137145129fb.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "TrailerTyreDmg Green",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\")?.value) > 10",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 24,
+                        "x": 754,
+                        "y": 198
+                    },
+                    "id": 205,
+                    "image": {
+                        "src": "MD5/7e337679cfd668069fb6ae85e9ed85c2.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "TrailerTyreDmg Yellow",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\")?.value) > 20",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 24,
+                        "x": 754,
+                        "y": 198
+                    },
+                    "id": 206,
+                    "image": {
+                        "src": "MD5/7cf3a51edb72fbd4e805e9cc8b77b56c.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "TrailerTyreDmg Red",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        },
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value",
+                                "((r=Number(_result),fc=((n,d)=>(([i,p=\"\"])=>`${i}${d?`.${(p+(\"0\".repeat(d))).slice(0,d)}`:\"\"}`)(n.toString().split(\".\"))))=>isNaN(r)?undefined:fc(r, 2))()"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 49,
+                        "x": 703,
+                        "y": 198
+                    },
+                    "id": 203,
+                    "macros": {
+                    },
+                    "name": "TrailerTyreDamage",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "Furore",
+                        "fontSize": 15,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignRight",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "undefined",
+                        "verticalAlignment": "AlignTop",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 24,
+                        "locked": true,
+                        "visible": true,
+                        "width": 24,
+                        "x": 754,
+                        "y": 223
+                    },
+                    "id": 208,
+                    "image": {
+                        "src": "MD5/2752b843d722cbf88a8a7632c54a36f3.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "CargoDmg No",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        },
                         "text.text": {
                             "methods": [
                                 "Telemetry.get(\"v1/gameData/DamageCargo\").value",
@@ -468,12 +863,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 224
+                        "width": 49,
+                        "x": 703,
+                        "y": 223
                     },
                     "id": 152,
                     "macros": {
@@ -513,6 +908,13 @@
                     "actions": {
                     },
                     "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
                     },
                     "borderStyle": {
                         "allBorders": 0,
@@ -551,12 +953,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 220
+                        "width": 24,
+                        "x": 754,
+                        "y": 223
                     },
                     "id": 149,
                     "image": {
@@ -575,7 +977,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageCargo\").value > 5",
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageCargo\")?.value) > 5",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -618,12 +1020,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 220
+                        "width": 24,
+                        "x": 754,
+                        "y": 223
                     },
                     "id": 150,
                     "image": {
@@ -642,7 +1044,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageCargo\").value > 10",
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageCargo\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -685,12 +1087,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 220
+                        "width": 24,
+                        "x": 754,
+                        "y": 223
                     },
                     "id": 151,
                     "image": {
@@ -707,6 +1109,13 @@
                     "actions": {
                     },
                     "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        },
                         "text.text": {
                             "methods": [
                                 "Telemetry.get(\"v1/gameData/DamageTrailer\").value",
@@ -761,12 +1170,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 196
+                        "width": 49,
+                        "x": 703,
+                        "y": 174
                     },
                     "id": 148,
                     "macros": {
@@ -806,6 +1215,13 @@
                     "actions": {
                     },
                     "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
                     },
                     "borderStyle": {
                         "allBorders": 0,
@@ -844,12 +1260,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 192
+                        "width": 24,
+                        "x": 754,
+                        "y": 174
                     },
                     "id": 145,
                     "image": {
@@ -868,7 +1284,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageTrailer\").value > 10",
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailer\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -911,12 +1327,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 192
+                        "width": 24,
+                        "x": 754,
+                        "y": 174
                     },
                     "id": 146,
                     "image": {
@@ -935,7 +1351,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageTrailer\").value > 20",
+                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailer\")?.value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -978,12 +1394,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 192
+                        "width": 24,
+                        "x": 754,
+                        "y": 174
                     },
                     "id": 147,
                     "image": {
@@ -1054,12 +1470,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 170
+                        "width": 49,
+                        "x": 703,
+                        "y": 50
                     },
                     "id": 140,
                     "macros": {
@@ -1137,12 +1553,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 164
+                        "width": 24,
+                        "x": 754,
+                        "y": 50
                     },
                     "id": 141,
                     "image": {
@@ -1161,7 +1577,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageCabin\").value > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageCabin\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1204,12 +1620,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 164
+                        "width": 24,
+                        "x": 754,
+                        "y": 50
                     },
                     "id": 142,
                     "image": {
@@ -1228,7 +1644,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageCabin\").value > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageCabin\")?.value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1271,12 +1687,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 164
+                        "width": 24,
+                        "x": 754,
+                        "y": 50
                     },
                     "id": 143,
                     "image": {
@@ -1347,12 +1763,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 140
+                        "width": 49,
+                        "x": 703,
+                        "y": 149
                     },
                     "id": 184,
                     "macros": {
@@ -1430,12 +1846,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 136
+                        "width": 24,
+                        "x": 754,
+                        "y": 149
                     },
                     "id": 137,
                     "image": {
@@ -1454,7 +1870,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageTyre\").value > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTyre\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1497,12 +1913,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 136
+                        "width": 24,
+                        "x": 754,
+                        "y": 149
                     },
                     "id": 138,
                     "image": {
@@ -1521,7 +1937,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageTyre\").value > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTyre\")?.value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1564,12 +1980,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 136
+                        "width": 24,
+                        "x": 754,
+                        "y": 149
                     },
                     "id": 139,
                     "image": {
@@ -1640,12 +2056,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 112
+                        "width": 49,
+                        "x": 703,
+                        "y": 75
                     },
                     "id": 136,
                     "macros": {
@@ -1723,12 +2139,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 108
+                        "width": 24,
+                        "x": 754,
+                        "y": 75
                     },
                     "id": 133,
                     "image": {
@@ -1747,7 +2163,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageChassis\").value > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageChassis\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1790,12 +2206,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 108
+                        "width": 24,
+                        "x": 754,
+                        "y": 75
                     },
                     "id": 134,
                     "image": {
@@ -1814,7 +2230,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageChassis\").value > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageChassis\")?.value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1857,12 +2273,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 108
+                        "width": 24,
+                        "x": 754,
+                        "y": 75
                     },
                     "id": 135,
                     "image": {
@@ -1933,12 +2349,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 84
+                        "width": 49,
+                        "x": 703,
+                        "y": 124
                     },
                     "id": 128,
                     "macros": {
@@ -2016,12 +2432,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 80
+                        "width": 24,
+                        "x": 754,
+                        "y": 124
                     },
                     "id": 125,
                     "image": {
@@ -2040,7 +2456,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageTransmission\").value > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTransmission\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2083,12 +2499,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 80
+                        "width": 24,
+                        "x": 754,
+                        "y": 124
                     },
                     "id": 131,
                     "image": {
@@ -2107,7 +2523,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageTransmission\").value > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTransmission\")?.value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2150,12 +2566,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 80
+                        "width": 24,
+                        "x": 754,
+                        "y": 124
                     },
                     "id": 132,
                     "image": {
@@ -2226,12 +2642,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 20,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 45,
-                        "x": 705,
-                        "y": 56
+                        "width": 49,
+                        "x": 703,
+                        "y": 100
                     },
                     "id": 129,
                     "macros": {
@@ -2309,12 +2725,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 52
+                        "width": 24,
+                        "x": 754,
+                        "y": 100
                     },
                     "id": 130,
                     "image": {
@@ -2333,7 +2749,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageEngine\").value > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageEngine\")?.value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2376,12 +2792,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 52
+                        "width": 24,
+                        "x": 754,
+                        "y": 100
                     },
                     "id": 126,
                     "image": {
@@ -2400,7 +2816,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/DamageEngine\").value > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageEngine\")?.value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2443,12 +2859,12 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 28,
+                        "height": 24,
                         "locked": true,
                         "visible": true,
-                        "width": 28,
-                        "x": 752,
-                        "y": 52
+                        "width": 24,
+                        "x": 754,
+                        "y": 100
                     },
                     "id": 127,
                     "image": {
@@ -2503,11 +2919,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 728,
+                        "width": 48,
+                        "x": 195,
                         "y": 1
                     },
                     "id": 116,
@@ -2570,11 +2986,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 728,
+                        "width": 48,
+                        "x": 195,
                         "y": 1
                     },
                     "id": 117,
@@ -2630,138 +3046,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 676,
-                        "y": 1
-                    },
-                    "id": 114,
-                    "image": {
-                        "src": "MD5/b9ee78e7db865fb2d99250211e734793.png"
-                    },
-                    "macros": {
-                    },
-                    "name": "OilPressure Off",
-                    "plugins": [
-                    ],
-                    "type": "Image.qml"
-                },
-                {
-                    "actions": {
-                    },
-                    "binding": {
-                        "general.visible": {
-                            "methods": [
-                                "Telemetry.get(\"v1/gameData/OilPressureWarning\").value",
-                                "_result"
-                            ],
-                            "type": "METHOD_CHAINING"
-                        }
-                    },
-                    "borderStyle": {
-                        "allBorders": 0,
-                        "allCornerRadius": 0,
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "bordersBottom": 0,
-                        "bordersLeft": 0,
-                        "bordersRight": 0,
-                        "bordersTop": 0,
-                        "radiusBottomLeft": 0,
-                        "radiusBottomRight": 0,
-                        "radiusTopLeft": 0,
-                        "radiusTopRight": 0
-                    },
-                    "children": [
-                    ],
-                    "effect": {
-                        "blinkDelay": 250,
-                        "blinkEnabled": false,
-                        "blurRadius": 0,
-                        "gravitySensorEnabled": false,
-                        "opacity": 100,
-                        "rotation": 0
-                    },
-                    "general": {
-                        "backgroundColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderRadius": 0,
-                        "borderWidth": 0,
-                        "height": 50,
-                        "locked": true,
-                        "visible": true,
-                        "width": 50,
-                        "x": 676,
-                        "y": 1
-                    },
-                    "id": 115,
-                    "image": {
-                        "src": "MD5/82f14d40cf1c58dbd13377200ce17fc3.png"
-                    },
-                    "macros": {
-                    },
-                    "name": "OilPressure On",
-                    "plugins": [
-                    ],
-                    "type": "Image.qml"
-                },
-                {
-                    "actions": {
-                    },
-                    "binding": {
-                    },
-                    "borderStyle": {
-                        "allBorders": 0,
-                        "allCornerRadius": 0,
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "bordersBottom": 0,
-                        "bordersLeft": 0,
-                        "bordersRight": 0,
-                        "bordersTop": 0,
-                        "radiusBottomLeft": 0,
-                        "radiusBottomRight": 0,
-                        "radiusTopLeft": 0,
-                        "radiusTopRight": 0
-                    },
-                    "children": [
-                    ],
-                    "effect": {
-                        "blinkDelay": 250,
-                        "blinkEnabled": false,
-                        "blurRadius": 0,
-                        "gravitySensorEnabled": false,
-                        "opacity": 100,
-                        "rotation": 0
-                    },
-                    "general": {
-                        "backgroundColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderRadius": 0,
-                        "borderWidth": 0,
-                        "height": 50,
-                        "locked": true,
-                        "visible": true,
-                        "width": 50,
-                        "x": 624,
+                        "width": 48,
+                        "x": 634,
                         "y": 1
                     },
                     "id": 112,
@@ -2824,11 +3113,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 624,
+                        "width": 48,
+                        "x": 634,
                         "y": 1
                     },
                     "id": 113,
@@ -2884,11 +3173,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 572,
+                        "width": 48,
+                        "x": 146,
                         "y": 1
                     },
                     "id": 110,
@@ -2951,11 +3240,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 572,
+                        "width": 48,
+                        "x": 146,
                         "y": 1
                     },
                     "id": 111,
@@ -3011,11 +3300,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 520,
+                        "width": 48,
+                        "x": 98,
                         "y": 1
                     },
                     "id": 109,
@@ -3078,11 +3367,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 520,
+                        "width": 48,
+                        "x": 98,
                         "y": 1
                     },
                     "id": 108,
@@ -3138,11 +3427,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 468,
+                        "width": 48,
+                        "x": 536,
                         "y": 1
                     },
                     "id": 96,
@@ -3205,11 +3494,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 468,
+                        "width": 48,
+                        "x": 536,
                         "y": 1
                     },
                     "id": 60,
@@ -3265,11 +3554,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 416,
+                        "width": 48,
+                        "x": 49,
                         "y": 1
                     },
                     "id": 58,
@@ -3332,11 +3621,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 416,
+                        "width": 48,
+                        "x": 49,
                         "y": 1
                     },
                     "id": 97,
@@ -3418,8 +3707,8 @@
                         "height": 20,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 416,
+                        "width": 48,
+                        "x": 49,
                         "y": 19
                     },
                     "id": 59,
@@ -3498,11 +3787,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 364,
+                        "width": 48,
+                        "x": 731,
                         "y": 1
                     },
                     "id": 106,
@@ -3511,7 +3800,7 @@
                     },
                     "macros": {
                     },
-                    "name": "AirPressure Off",
+                    "name": "Caution Off",
                     "plugins": [
                     ],
                     "type": "Image.qml"
@@ -3522,7 +3811,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/AirPressureWarning\").value",
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && (!!Telemetry.get(\"v1/gameData/WaterTemperatureWarning\")?.value || !!Telemetry.get(\"v1/gameData/OilPressureWarning\")?.value || Number(Telemetry.get(\"v1/gameData/OilTemperature\")?.value) > 99 || !!Telemetry.get(\"v1/gameData/AirPressureWarning\")?.value)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -3565,11 +3854,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 364,
+                        "width": 48,
+                        "x": 731,
                         "y": 1
                     },
                     "id": 107,
@@ -3578,7 +3867,7 @@
                     },
                     "macros": {
                     },
-                    "name": "AirPressure Warning",
+                    "name": "Caution Warning",
                     "plugins": [
                     ],
                     "type": "Image.qml"
@@ -3589,7 +3878,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/AirPressureCritical\").value",
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && (Number(Telemetry.get(\"v1/gameData/OilTemperature\")?.value) > 105 || !!Telemetry.get(\"v1/gameData/AirPressureCritical\")?.value)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -3632,11 +3921,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 364,
+                        "width": 48,
+                        "x": 731,
                         "y": 1
                     },
                     "id": 178,
@@ -3645,7 +3934,7 @@
                     },
                     "macros": {
                     },
-                    "name": "AirPressure On",
+                    "name": "Caution Critical",
                     "plugins": [
                     ],
                     "type": "Image.qml"
@@ -3692,11 +3981,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 312,
+                        "width": 48,
+                        "x": 292,
                         "y": 1
                     },
                     "id": 104,
@@ -3759,11 +4048,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 312,
+                        "width": 48,
+                        "x": 292,
                         "y": 1
                     },
                     "id": 105,
@@ -3819,11 +4108,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 260,
+                        "width": 48,
+                        "x": 488,
                         "y": 1
                     },
                     "id": 46,
@@ -3886,11 +4175,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 260,
+                        "width": 48,
+                        "x": 488,
                         "y": 1
                     },
                     "id": 103,
@@ -3946,11 +4235,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 208,
+                        "width": 48,
+                        "x": 439,
                         "y": 1
                     },
                     "id": 87,
@@ -3970,7 +4259,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/HighBeamLight\").value",
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/HighBeamLight\")?.value",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4013,11 +4302,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 208,
+                        "width": 48,
+                        "x": 439,
                         "y": 1
                     },
                     "id": 99,
@@ -4073,11 +4362,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 156,
+                        "width": 48,
+                        "x": 390,
                         "y": 1
                     },
                     "id": 23,
@@ -4097,7 +4386,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/LowBeamLight\").value",
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/LowBeamLight\")?.value",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4140,11 +4429,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 156,
+                        "width": 48,
+                        "x": 390,
                         "y": 1
                     },
                     "id": 98,
@@ -4200,11 +4489,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 104,
+                        "width": 48,
+                        "x": 341,
                         "y": 1
                     },
                     "id": 100,
@@ -4224,7 +4513,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/ParkLight\").value",
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/ParkLight\")?.value",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4267,11 +4556,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 104,
+                        "width": 48,
+                        "x": 341,
                         "y": 1
                     },
                     "id": 101,
@@ -4327,11 +4616,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 52,
+                        "width": 48,
+                        "x": 244,
                         "y": 1
                     },
                     "id": 95,
@@ -4351,7 +4640,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/Wipers\").value",
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/Wipers\")?.value",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4394,11 +4683,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 52,
+                        "width": 48,
+                        "x": 244,
                         "y": 1
                     },
                     "id": 21,
@@ -4454,11 +4743,332 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 1,
+                        "width": 48,
+                        "x": 585,
+                        "y": 1
+                    },
+                    "id": 197,
+                    "image": {
+                        "src": "MD5/d60365073ab28666af3b73df62501698.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "DiffLock Off",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/DifferentialLock\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 48,
+                        "locked": true,
+                        "visible": true,
+                        "width": 48,
+                        "x": 585,
+                        "y": 1
+                    },
+                    "id": 198,
+                    "image": {
+                        "src": "MD5/1620ec550621b838cc8817404ac7f0e3.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "DiffLock On",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 48,
+                        "locked": true,
+                        "visible": true,
+                        "width": 48,
+                        "x": 682,
+                        "y": 1
+                    },
+                    "id": 199,
+                    "image": {
+                        "src": "MD5/948415f9ad9759a92a4e1e8055e044bd.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "Water Normal",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && Number(Telemetry.get(\"v1/gameData/WaterTemperature\")?.value) < 30",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 48,
+                        "locked": true,
+                        "visible": true,
+                        "width": 48,
+                        "x": 682,
+                        "y": 1
+                    },
+                    "id": 200,
+                    "image": {
+                        "src": "MD5/712f66accbc0ee95ef423cd48e4744c3.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "Water Cold",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "general.visible": {
+                            "methods": [
+                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/WaterTemperatureWarning\")?.value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 48,
+                        "locked": true,
+                        "visible": true,
+                        "width": 48,
+                        "x": 682,
+                        "y": 1
+                    },
+                    "id": 201,
+                    "image": {
+                        "src": "MD5/bbd047d70b2ae09d1233c246de7a3c59.png"
+                    },
+                    "macros": {
+                    },
+                    "name": "Water Hot",
+                    "plugins": [
+                    ],
+                    "type": "Image.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 48,
+                        "locked": true,
+                        "visible": true,
+                        "width": 48,
+                        "x": 0,
                         "y": 1
                     },
                     "id": 53,
@@ -4521,11 +5131,11 @@
                         },
                         "borderRadius": 0,
                         "borderWidth": 0,
-                        "height": 50,
+                        "height": 48,
                         "locked": true,
                         "visible": true,
-                        "width": 50,
-                        "x": 1,
+                        "width": 48,
+                        "x": 0,
                         "y": 1
                     },
                     "id": 102,
@@ -6046,106 +6656,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/GearboxType\").value",
-                                "_result"
-                            ],
-                            "type": "METHOD_CHAINING"
-                        }
-                    },
-                    "borderStyle": {
-                        "allBorders": 0,
-                        "allCornerRadius": 0,
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "bordersBottom": 0,
-                        "bordersLeft": 0,
-                        "bordersRight": 0,
-                        "bordersTop": 0,
-                        "radiusBottomLeft": 0,
-                        "radiusBottomRight": 0,
-                        "radiusTopLeft": 0,
-                        "radiusTopRight": 0
-                    },
-                    "children": [
-                    ],
-                    "effect": {
-                        "blinkDelay": 250,
-                        "blinkEnabled": false,
-                        "blurRadius": 0,
-                        "gravitySensorEnabled": false,
-                        "opacity": 100,
-                        "outerShadow": {
-                            "blur": 0,
-                            "color": {
-                                "color": "#00000000",
-                                "type": "SOLID"
-                            },
-                            "depth": 0,
-                            "direction": 0
-                        },
-                        "rotation": 0
-                    },
-                    "general": {
-                        "backgroundColor": {
-                            "color": "#2209ff",
-                            "type": "SOLID"
-                        },
-                        "borderColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "borderRadius": 0,
-                        "borderWidth": 0,
-                        "height": 32,
-                        "locked": false,
-                        "visible": true,
-                        "width": 150,
-                        "x": 550,
-                        "y": 264
-                    },
-                    "id": 155,
-                    "macros": {
-                    },
-                    "name": "Gearbox Hidden",
-                    "plugins": [
-                    ],
-                    "text": {
-                        "fontColor": {
-                            "color": "#FFFFFFFF",
-                            "type": "SOLID"
-                        },
-                        "fontFamily": "Furore",
-                        "fontSize": 22,
-                        "fontWeight": 500,
-                        "horizontalAlignment": "AlignCenter",
-                        "paddingBottom": 0,
-                        "paddingLeft": 0,
-                        "paddingRight": 0,
-                        "paddingTop": 0,
-                        "text": "undefined",
-                        "verticalAlignment": "AlignTop",
-                        "wrapText": false
-                    },
-                    "textEffect": {
-                        "shadowBlur": 0,
-                        "shadowColor": {
-                            "color": "#00000000",
-                            "type": "SOLID"
-                        },
-                        "shadowDepth": 0,
-                        "shadowDirection": 0
-                    },
-                    "type": "Text.qml"
-                },
-                {
-                    "actions": {
-                    },
-                    "binding": {
-                        "text.text": {
-                            "methods": [
-                                "(() => {\n  const gearbox = Telemetry.get(\"v1/gameData/GearboxType\")?.value;\n  if (gearbox == '1' || gearbox == 'Arcade') return 'ARCADE';\n  if (gearbox == '2' || gearbox == 'Automatic') return 'AUTOMATIC';\n  if (gearbox == '3' || gearbox == 'Manual') return 'SEQUENTIAL';\n  if (gearbox == '4' || gearbox == 'HShifter') return 'H-SHIFTER';\n})()",
+                                "\n(() => {\n  const on = (ch) => !!Telemetry.get(\"v1/gameData/\" + ch)?.value;\n  if (on(\"GearboxTypeSequential\")) return 'SEQUENTIAL';\n  if (on(\"GearboxTypeHShifter\")) return 'H-SHIFTER';\n  if (on(\"GearboxTypeAutomatic\")) return 'AUTOMATIC';\n  return '';\n})()",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -8934,7 +9445,6 @@
         "MD5/b7de12a24f80ecece8edc2b9576af5d8.png",
         "MD5/820be1958b84bdb7f53ef4cc1534f059.png",
         "MD5/4244a37907ce08c5c839f7dd19617afb.png",
-        "MD5/b9ee78e7db865fb2d99250211e734793.png",
         "MD5/c66da0f15cba8b2a2a7d52e48c377d39.png",
         "MD5/006a304c0cbf3e7318a241da73d74cd4.png",
         "MD5/db5de3a2f6aa4ec72bf33dba77ed3f09.png",
@@ -8980,18 +9490,28 @@
         "MD5/7c01ff72394026de3d45410a21fccead.png",
         "MD5/b3fbc1742de8ea353b626e16e823c2ed.png",
         "MD5/cd74473bf8fdb713804e031a8bfece2d.png",
-        "MD5/82f14d40cf1c58dbd13377200ce17fc3.png",
         "MD5/f7ba7db0c0226d6aba056689cb99232c.png",
-        "MD5/fcaf589dd4daf458578f55b26422d6a4.png"
+        "MD5/fcaf589dd4daf458578f55b26422d6a4.png",
+        "MD5/d60365073ab28666af3b73df62501698.png",
+        "MD5/1620ec550621b838cc8817404ac7f0e3.png",
+        "MD5/948415f9ad9759a92a4e1e8055e044bd.png",
+        "MD5/712f66accbc0ee95ef423cd48e4744c3.png",
+        "MD5/bbd047d70b2ae09d1233c246de7a3c59.png",
+        "MD5/5dcfcec9a469400ead043b10a52f6da7.png",
+        "MD5/20e658f6de8fc6a9a3611137145129fb.png",
+        "MD5/7e337679cfd668069fb6ae85e9ed85c2.png",
+        "MD5/7cf3a51edb72fbd4e805e9cc8b77b56c.png",
+        "MD5/5aa7ddf0de2653516388743f59e29ae2.png",
+        "MD5/2752b843d722cbf88a8a7632c54a36f3.png"
     ],
-    "lastModified": 1794055789,
+    "lastModified": 1794062971,
     "macros": {
     },
     "name": "AZOM Truck",
     "plugins": [
     ],
     "type": "Window.qml",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "window": {
         "GUID": "YehQDYWhTVpMW7mLf22ic5WLcxZ9Tj5r",
         "defaultScreenId": 0,
