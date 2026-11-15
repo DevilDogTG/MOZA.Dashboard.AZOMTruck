@@ -107,11 +107,21 @@ Edit in MOZA Dashboard Studio, save so that `src/AZOM Truck/` holds the result, 
 - Studio copies each imported image into `Resource/MD5/` under its hash, so changing an image adds a new file.
   Delete the old file only once no `MD5/...` entry in the `.mzdash` `imageResources` list names it.
 - `lastModified` in the `.mzdash` changes on every save, so expect that line in every diff.
-- Every channel must be bound plainly by some element: `Telemetry.get("v1/gameData/<name>").value` as the whole
-  first method, with any calculation in a later method on `_result`. A channel read only inside a calculation does
-  not reach the wheel correctly: in 1.2.0 the gear lost its crawler and DD/OD text and the caution light stayed on.
-  The off-screen `Data <name>` labels below the canvas (y 300 and down) exist only to bind such channels. Add one
-  when new logic reads a channel nothing else binds, and never delete them as leftovers.
+- The wheel updates a binding only for the channels its first evaluation read. A binding that combines channels
+  must therefore read all of them every time, before any `&&`, `||`, `?:` or `if`: pass them as arguments to an
+  arrow function, the channel that changes most first:
+
+  ```js
+  ((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get("v1/gameData/LowBeamLight").value), Number(Telemetry.get("v1/gameData/ElectricEnabled").value))
+  ```
+
+  Written inline as `electric > 0 && on > 0` and loaded with the electrics off, it never reads the light channel,
+  and the icon freezes at whatever it showed when the electrics came on. That is how the light icons and the
+  caution stuck on in 1.2.0 and in early 1.2.1 testing.
+- The off-screen `Data <name>` labels below the canvas (y 300 and down) bind channels plainly
+  (`Telemetry.get("v1/gameData/<name>").value` as the whole first method), so every channel the logic uses is read
+  as soon as the dashboard loads. Without them 1.2.0 lost the gear's crawler and DD/OD text. Add one when new logic
+  reads a channel nothing else binds plainly, and never delete them as leftovers.
 - In calculations, read `.value` (not `?.value`) and test on/off channels with `Number(x) > 0`, not `!!x`, which is
   true for the text `"0"`.
 
