@@ -10890,14 +10890,14 @@
         "MD5/5aa7ddf0de2653516388743f59e29ae2.png",
         "MD5/2752b843d722cbf88a8a7632c54a36f3.png"
     ],
-    "lastModified": 1794739446,
+    "lastModified": 1794740749,
     "macros": {
     },
     "name": "AZOM Truck",
     "plugins": [
     ],
     "type": "Window.qml",
-    "version": "1.2.1",
+    "version": "1.2.2",
     "window": {
         "GUID": "YehQDYWhTVpMW7mLf22ic5WLcxZ9Tj5r",
         "defaultScreenId": 0,
