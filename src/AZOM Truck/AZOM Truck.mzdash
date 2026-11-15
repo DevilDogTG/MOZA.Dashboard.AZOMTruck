@@ -48,8 +48,8 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "\n(() => {\n  const gear = Number(Telemetry.get(\"v1/gameData/Gear\")?.value);\n  if (isNaN(gear)) return '';\n  if (gear == 0) return 'N';\n  if (gear < 0) {\n    const totalRvs = Number(Telemetry.get(\"v1/gameData/ReverseGearCount\")?.value);\n    return totalRvs == 1 ? 'R' : 'R' + (-gear);\n  }\n  const totalFwd = Number(Telemetry.get(\"v1/gameData/ForwardGearCount\")?.value);\n  const totalCrawler = totalFwd == 13 ? 1 : (totalFwd == 14 ? 2 : 0);\n  if (gear <= totalCrawler) return 'C' + gear;\n  if (gear >= 10) {\n    // GearRatioType: 1 = direct drive (ratio 1), 2 = overdrive (ratio < 1), worked out SimHub-side.\n    const ratioType = Number(Telemetry.get(\"v1/gameData/GearRatioType\")?.value);\n    if (ratioType == 1) return 'DD';\n    if (ratioType == 2) return 'OD';\n  }\n  return String(gear - totalCrawler);\n})()",
-                                "_result"
+                                "Telemetry.get(\"v1/gameData/Gear\").value",
+                                "((gear = Number(_result)) => {\n  if (isNaN(gear)) return '';\n  if (gear == 0) return 'N';\n  if (gear < 0) {\n    const totalRvs = Number(Telemetry.get(\"v1/gameData/ReverseGearCount\").value);\n    return totalRvs == 1 ? 'R' : 'R' + (-gear);\n  }\n  const totalFwd = Number(Telemetry.get(\"v1/gameData/ForwardGearCount\").value);\n  const totalCrawler = totalFwd == 13 ? 1 : (totalFwd == 14 ? 2 : 0);\n  if (gear <= totalCrawler) return 'C' + gear;\n  if (gear >= 10) {\n    // GearRatioType: 1 = direct drive (ratio 1), 2 = overdrive (ratio < 1), worked out SimHub-side.\n    const ratioType = Number(Telemetry.get(\"v1/gameData/GearRatioType\").value);\n    if (ratioType == 1) return 'DD';\n    if (ratioType == 2) return 'OD';\n  }\n  return String(gear - totalCrawler);\n})()"
                             ],
                             "type": "METHOD_CHAINING"
                         }
@@ -437,7 +437,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -504,7 +504,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\")?.value) > 10",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -571,7 +571,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\")?.value) > 20",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -638,7 +638,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -804,7 +804,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -910,7 +910,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -977,7 +977,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageCargo\")?.value) > 5",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageCargo\").value) > 5",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1044,7 +1044,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageCargo\")?.value) > 10",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageCargo\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1111,7 +1111,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1217,7 +1217,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1284,7 +1284,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailer\")?.value) > 10",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailer\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1351,7 +1351,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/TrailerAttached\")?.value && Number(Telemetry.get(\"v1/gameData/DamageTrailer\")?.value) > 20",
+                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailer\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1577,7 +1577,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageCabin\")?.value) > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageCabin\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1644,7 +1644,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageCabin\")?.value) > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageCabin\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1870,7 +1870,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageTyre\")?.value) > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTyre\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1937,7 +1937,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageTyre\")?.value) > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTyre\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2163,7 +2163,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageChassis\")?.value) > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageChassis\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2230,7 +2230,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageChassis\")?.value) > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageChassis\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2456,7 +2456,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageTransmission\")?.value) > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTransmission\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2523,7 +2523,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageTransmission\")?.value) > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageTransmission\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2749,7 +2749,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageEngine\")?.value) > 10",
+                                "Number(Telemetry.get(\"v1/gameData/DamageEngine\").value) > 10",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -2816,7 +2816,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "Number(Telemetry.get(\"v1/gameData/DamageEngine\")?.value) > 20",
+                                "Number(Telemetry.get(\"v1/gameData/DamageEngine\").value) > 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -3811,7 +3811,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && (!!Telemetry.get(\"v1/gameData/WaterTemperatureWarning\")?.value || !!Telemetry.get(\"v1/gameData/OilPressureWarning\")?.value || Number(Telemetry.get(\"v1/gameData/OilTemperature\")?.value) > 99 || !!Telemetry.get(\"v1/gameData/AirPressureWarning\")?.value)",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && ((Number(Telemetry.get(\"v1/gameData/WaterTemperatureWarning\").value) > 0) || (Number(Telemetry.get(\"v1/gameData/OilPressureWarning\").value) > 0) || Number(Telemetry.get(\"v1/gameData/OilTemperature\").value) > 99 || (Number(Telemetry.get(\"v1/gameData/AirPressureWarning\").value) > 0))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -3878,7 +3878,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && (Number(Telemetry.get(\"v1/gameData/OilTemperature\")?.value) > 105 || !!Telemetry.get(\"v1/gameData/AirPressureCritical\")?.value)",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/OilTemperature\").value) > 105 || (Number(Telemetry.get(\"v1/gameData/AirPressureCritical\").value) > 0))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4259,7 +4259,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/HighBeamLight\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/HighBeamLight\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4386,7 +4386,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/LowBeamLight\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/LowBeamLight\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4513,7 +4513,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/ParkLight\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/ParkLight\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4640,7 +4640,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/Wipers\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/Wipers\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4767,7 +4767,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/DifferentialLock\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/DifferentialLock\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4894,7 +4894,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && Number(Telemetry.get(\"v1/gameData/WaterTemperature\")?.value) < 30",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && Number(Telemetry.get(\"v1/gameData/WaterTemperature\").value) < 30",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4961,7 +4961,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "!!Telemetry.get(\"v1/gameData/ElectricEnabled\")?.value && !!Telemetry.get(\"v1/gameData/WaterTemperatureWarning\")?.value",
+                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/WaterTemperatureWarning\").value) > 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -5155,7 +5155,7 @@
                     "binding": {
                         "linearGauge.value": {
                             "methods": [
-                                "(parseFloat(Telemetry.get(\"v1/gameData/Fuel\")?.value) || 0 / parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\")?.value) || 1) * 100",
+                                "(parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0 / parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 1) * 100",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -5240,7 +5240,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "(() => {\n  const range = parseFloat(Telemetry.get(\"v1/gameData/FuelRange\")?.value) || 0;\n  return range > 0 ? \"( \" + range.toFixed(0) + \" Km )\" : \"( N/a Km )\";\n})()",
+                                "(() => {\n  const range = parseFloat(Telemetry.get(\"v1/gameData/FuelRange\").value) || 0;\n  return range > 0 ? \"( \" + range.toFixed(0) + \" Km )\" : \"( N/a Km )\";\n})()",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -5339,7 +5339,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "(() => {\n  const fuel = parseFloat(Telemetry.get(\"v1/gameData/Fuel\")?.value) || 0;\n  const cap = parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\")?.value) || 0;\n  return fuel.toFixed(2) + \" / \" + cap.toFixed(0) + \"L\";\n})()",
+                                "(() => {\n  const fuel = parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0;\n  const cap = parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 0;\n  return fuel.toFixed(2) + \" / \" + cap.toFixed(0) + \"L\";\n})()",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -5438,7 +5438,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "(() => {\n  const fuel = parseFloat(Telemetry.get(\"v1/gameData/Fuel\")?.value) || 0;\n  const cap = parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\")?.value) || 0;\n  return (cap > 0 ? ((fuel / cap) * 100).toFixed(2) : \"0.00\") + \" %\";\n})()",
+                                "(() => {\n  const fuel = parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0;\n  const cap = parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 0;\n  return (cap > 0 ? ((fuel / cap) * 100).toFixed(2) : \"0.00\") + \" %\";\n})()",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -5597,7 +5597,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(parseFloat(Telemetry.get(\"v1/gameData/Fuel\")?.value) || 0 / parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\")?.value) || 1) * 100 <= 20",
+                                "(parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0 / parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 1) * 100 <= 20",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -6656,7 +6656,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "\n(() => {\n  const on = (ch) => !!Telemetry.get(\"v1/gameData/\" + ch)?.value;\n  if (on(\"GearboxTypeSequential\")) return 'SEQUENTIAL';\n  if (on(\"GearboxTypeHShifter\")) return 'H-SHIFTER';\n  if (on(\"GearboxTypeAutomatic\")) return 'AUTOMATIC';\n  return '';\n})()",
+                                "(() => {\n  if (Number(Telemetry.get(\"v1/gameData/GearboxTypeSequential\").value) > 0) return 'SEQUENTIAL';\n  if (Number(Telemetry.get(\"v1/gameData/GearboxTypeHShifter\").value) > 0) return 'H-SHIFTER';\n  if (Number(Telemetry.get(\"v1/gameData/GearboxTypeAutomatic\").value) > 0) return 'AUTOMATIC';\n  return '';\n})()",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -9355,6 +9355,1392 @@
                     "plugins": [
                     ],
                     "type": "Rectangle.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/CruiseControlSpeedKmh\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 0,
+                        "y": 300
+                    },
+                    "id": 209,
+                    "macros": {
+                    },
+                    "name": "Data CruiseControlSpeedKmh",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/DifferentialLock\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 78,
+                        "y": 300
+                    },
+                    "id": 210,
+                    "macros": {
+                    },
+                    "name": "Data DifferentialLock",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/ElectricEnabled\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 156,
+                        "y": 300
+                    },
+                    "id": 211,
+                    "macros": {
+                    },
+                    "name": "Data ElectricEnabled",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/ForwardGearCount\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 234,
+                        "y": 300
+                    },
+                    "id": 212,
+                    "macros": {
+                    },
+                    "name": "Data ForwardGearCount",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/Fuel\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 312,
+                        "y": 300
+                    },
+                    "id": 213,
+                    "macros": {
+                    },
+                    "name": "Data Fuel",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/FuelCapacity\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 390,
+                        "y": 300
+                    },
+                    "id": 214,
+                    "macros": {
+                    },
+                    "name": "Data FuelCapacity",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/FuelRange\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 468,
+                        "y": 300
+                    },
+                    "id": 215,
+                    "macros": {
+                    },
+                    "name": "Data FuelRange",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/GearRatioType\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 546,
+                        "y": 300
+                    },
+                    "id": 216,
+                    "macros": {
+                    },
+                    "name": "Data GearRatioType",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/HighBeamLight\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 624,
+                        "y": 300
+                    },
+                    "id": 217,
+                    "macros": {
+                    },
+                    "name": "Data HighBeamLight",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/LowBeamLight\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 702,
+                        "y": 300
+                    },
+                    "id": 218,
+                    "macros": {
+                    },
+                    "name": "Data LowBeamLight",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/OilPressureWarning\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 0,
+                        "y": 324
+                    },
+                    "id": 219,
+                    "macros": {
+                    },
+                    "name": "Data OilPressureWarning",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/ParkLight\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 78,
+                        "y": 324
+                    },
+                    "id": 220,
+                    "macros": {
+                    },
+                    "name": "Data ParkLight",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/ReverseGearCount\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 156,
+                        "y": 324
+                    },
+                    "id": 221,
+                    "macros": {
+                    },
+                    "name": "Data ReverseGearCount",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
+                },
+                {
+                    "actions": {
+                    },
+                    "binding": {
+                        "text.text": {
+                            "methods": [
+                                "Telemetry.get(\"v1/gameData/Wipers\").value",
+                                "_result"
+                            ],
+                            "type": "METHOD_CHAINING"
+                        }
+                    },
+                    "borderStyle": {
+                        "allBorders": 0,
+                        "allCornerRadius": 0,
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "bordersBottom": 0,
+                        "bordersLeft": 0,
+                        "bordersRight": 0,
+                        "bordersTop": 0,
+                        "radiusBottomLeft": 0,
+                        "radiusBottomRight": 0,
+                        "radiusTopLeft": 0,
+                        "radiusTopRight": 0
+                    },
+                    "children": [
+                    ],
+                    "effect": {
+                        "blinkDelay": 250,
+                        "blinkEnabled": false,
+                        "blurRadius": 0,
+                        "gravitySensorEnabled": false,
+                        "opacity": 100,
+                        "outerShadow": {
+                            "blur": 0,
+                            "color": {
+                                "color": "#00000000",
+                                "type": "SOLID"
+                            },
+                            "depth": 0,
+                            "direction": 0
+                        },
+                        "rotation": 0
+                    },
+                    "general": {
+                        "backgroundColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "borderRadius": 0,
+                        "borderWidth": 0,
+                        "height": 22,
+                        "locked": true,
+                        "visible": true,
+                        "width": 76,
+                        "x": 234,
+                        "y": 324
+                    },
+                    "id": 222,
+                    "macros": {
+                    },
+                    "name": "Data Wipers",
+                    "plugins": [
+                    ],
+                    "text": {
+                        "fontColor": {
+                            "color": "#FFFFFFFF",
+                            "type": "SOLID"
+                        },
+                        "fontFamily": "FRIZON",
+                        "fontSize": 12,
+                        "fontWeight": 500,
+                        "horizontalAlignment": "AlignCenter",
+                        "paddingBottom": 0,
+                        "paddingLeft": 0,
+                        "paddingRight": 0,
+                        "paddingTop": 0,
+                        "text": "0",
+                        "verticalAlignment": "AlignCenter",
+                        "wrapText": false
+                    },
+                    "textEffect": {
+                        "shadowBlur": 0,
+                        "shadowColor": {
+                            "color": "#00000000",
+                            "type": "SOLID"
+                        },
+                        "shadowDepth": 0,
+                        "shadowDirection": 0
+                    },
+                    "type": "Text.qml"
                 }
             ],
             "effect": {
@@ -9504,14 +10890,14 @@
         "MD5/5aa7ddf0de2653516388743f59e29ae2.png",
         "MD5/2752b843d722cbf88a8a7632c54a36f3.png"
     ],
-    "lastModified": 1794062971,
+    "lastModified": 1794726219,
     "macros": {
     },
     "name": "AZOM Truck",
     "plugins": [
     ],
     "type": "Window.qml",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "window": {
         "GUID": "YehQDYWhTVpMW7mLf22ic5WLcxZ9Tj5r",
         "defaultScreenId": 0,
