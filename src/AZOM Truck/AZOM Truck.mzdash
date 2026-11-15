@@ -5155,7 +5155,7 @@
                     "binding": {
                         "linearGauge.value": {
                             "methods": [
-                                "(parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0 / parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 1) * 100",
+                                "((fuel, cap) => cap > 0 ? fuel / cap * 100 : 0)(parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0, parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -5597,7 +5597,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0 / parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 1) * 100 <= 20",
+                                "((fuel, cap) => cap > 0 && fuel / cap * 100 <= 20)(parseFloat(Telemetry.get(\"v1/gameData/Fuel\").value) || 0, parseFloat(Telemetry.get(\"v1/gameData/FuelCapacity\").value) || 0)",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
