@@ -48,8 +48,8 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "Telemetry.get(\"v1/gameData/Gear\").value",
-                                "((gear = Number(_result)) => {\n  if (isNaN(gear)) return '';\n  if (gear == 0) return 'N';\n  if (gear < 0) {\n    const totalRvs = Number(Telemetry.get(\"v1/gameData/ReverseGearCount\").value);\n    return totalRvs == 1 ? 'R' : 'R' + (-gear);\n  }\n  const totalFwd = Number(Telemetry.get(\"v1/gameData/ForwardGearCount\").value);\n  const totalCrawler = totalFwd == 13 ? 1 : (totalFwd == 14 ? 2 : 0);\n  if (gear <= totalCrawler) return 'C' + gear;\n  if (gear >= 10) {\n    // GearRatioType: 1 = direct drive (ratio 1), 2 = overdrive (ratio < 1), worked out SimHub-side.\n    const ratioType = Number(Telemetry.get(\"v1/gameData/GearRatioType\").value);\n    if (ratioType == 1) return 'DD';\n    if (ratioType == 2) return 'OD';\n  }\n  return String(gear - totalCrawler);\n})()"
+                                "((gear, forwardCount, reverseCount, ratioType) => {\n  if (isNaN(gear)) return '';\n  if (gear == 0) return 'N';\n  if (gear < 0) return reverseCount == 1 ? 'R' : 'R' + (-gear);\n  const crawlers = forwardCount == 13 ? 1 : (forwardCount == 14 ? 2 : 0);\n  if (gear <= crawlers) return 'C' + gear;\n  // ratioType: 1 = direct drive (ratio 1), 2 = overdrive (ratio < 1), worked out SimHub-side.\n  if (gear >= 10 && ratioType == 1) return 'DD';\n  if (gear >= 10 && ratioType == 2) return 'OD';\n  return String(gear - crawlers);\n})(Number(Telemetry.get(\"v1/gameData/Gear\").value), Number(Telemetry.get(\"v1/gameData/ForwardGearCount\").value), Number(Telemetry.get(\"v1/gameData/ReverseGearCount\").value), Number(Telemetry.get(\"v1/gameData/GearRatioType\").value))",
+                                "_result"
                             ],
                             "type": "METHOD_CHAINING"
                         }
@@ -504,7 +504,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value) > 10",
+                                "((damage, trailer) => trailer > 0 && damage > 10)(Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value), Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -571,7 +571,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value) > 20",
+                                "((damage, trailer) => trailer > 0 && damage > 20)(Number(Telemetry.get(\"v1/gameData/DamageTrailerTyre\").value), Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -977,7 +977,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageCargo\").value) > 5",
+                                "((damage, trailer) => trailer > 0 && damage > 5)(Number(Telemetry.get(\"v1/gameData/DamageCargo\").value), Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1044,7 +1044,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageCargo\").value) > 10",
+                                "((damage, trailer) => trailer > 0 && damage > 10)(Number(Telemetry.get(\"v1/gameData/DamageCargo\").value), Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1284,7 +1284,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailer\").value) > 10",
+                                "((damage, trailer) => trailer > 0 && damage > 10)(Number(Telemetry.get(\"v1/gameData/DamageTrailer\").value), Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -1351,7 +1351,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value) > 0) && Number(Telemetry.get(\"v1/gameData/DamageTrailer\").value) > 20",
+                                "((damage, trailer) => trailer > 0 && damage > 20)(Number(Telemetry.get(\"v1/gameData/DamageTrailer\").value), Number(Telemetry.get(\"v1/gameData/TrailerAttached\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -3811,7 +3811,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && ((Number(Telemetry.get(\"v1/gameData/WaterTemperatureWarning\").value) > 0) || (Number(Telemetry.get(\"v1/gameData/OilPressureWarning\").value) > 0) || Number(Telemetry.get(\"v1/gameData/OilTemperature\").value) > 99 || (Number(Telemetry.get(\"v1/gameData/AirPressureWarning\").value) > 0))",
+                                "((water, oilPressure, oilTemp, air, electric) => electric > 0 && (water > 0 || oilPressure > 0 || oilTemp > 99 || air > 0))(Number(Telemetry.get(\"v1/gameData/WaterTemperatureWarning\").value), Number(Telemetry.get(\"v1/gameData/OilPressureWarning\").value), Number(Telemetry.get(\"v1/gameData/OilTemperature\").value), Number(Telemetry.get(\"v1/gameData/AirPressureWarning\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -3878,7 +3878,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/OilTemperature\").value) > 105 || (Number(Telemetry.get(\"v1/gameData/AirPressureCritical\").value) > 0))",
+                                "((oilTemp, airCritical, electric) => electric > 0 && (oilTemp > 105 || airCritical > 0))(Number(Telemetry.get(\"v1/gameData/OilTemperature\").value), Number(Telemetry.get(\"v1/gameData/AirPressureCritical\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4259,7 +4259,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/HighBeamLight\").value) > 0)",
+                                "((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get(\"v1/gameData/HighBeamLight\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4386,7 +4386,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/LowBeamLight\").value) > 0)",
+                                "((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get(\"v1/gameData/LowBeamLight\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4513,7 +4513,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/ParkLight\").value) > 0)",
+                                "((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get(\"v1/gameData/ParkLight\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4640,7 +4640,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/Wipers\").value) > 0)",
+                                "((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get(\"v1/gameData/Wipers\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4767,7 +4767,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/DifferentialLock\").value) > 0)",
+                                "((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get(\"v1/gameData/DifferentialLock\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4894,7 +4894,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && Number(Telemetry.get(\"v1/gameData/WaterTemperature\").value) < 30",
+                                "((temp, electric) => electric > 0 && temp < 30)(Number(Telemetry.get(\"v1/gameData/WaterTemperature\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -4961,7 +4961,7 @@
                     "binding": {
                         "general.visible": {
                             "methods": [
-                                "(Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value) > 0) && (Number(Telemetry.get(\"v1/gameData/WaterTemperatureWarning\").value) > 0)",
+                                "((on, electric) => electric > 0 && on > 0)(Number(Telemetry.get(\"v1/gameData/WaterTemperatureWarning\").value), Number(Telemetry.get(\"v1/gameData/ElectricEnabled\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -6656,7 +6656,7 @@
                     "binding": {
                         "text.text": {
                             "methods": [
-                                "(() => {\n  if (Number(Telemetry.get(\"v1/gameData/GearboxTypeSequential\").value) > 0) return 'SEQUENTIAL';\n  if (Number(Telemetry.get(\"v1/gameData/GearboxTypeHShifter\").value) > 0) return 'H-SHIFTER';\n  if (Number(Telemetry.get(\"v1/gameData/GearboxTypeAutomatic\").value) > 0) return 'AUTOMATIC';\n  return '';\n})()",
+                                "((sequential, hShifter, automatic) => sequential > 0 ? 'SEQUENTIAL' : hShifter > 0 ? 'H-SHIFTER' : automatic > 0 ? 'AUTOMATIC' : '')(Number(Telemetry.get(\"v1/gameData/GearboxTypeSequential\").value), Number(Telemetry.get(\"v1/gameData/GearboxTypeHShifter\").value), Number(Telemetry.get(\"v1/gameData/GearboxTypeAutomatic\").value))",
                                 "_result"
                             ],
                             "type": "METHOD_CHAINING"
@@ -10890,7 +10890,7 @@
         "MD5/5aa7ddf0de2653516388743f59e29ae2.png",
         "MD5/2752b843d722cbf88a8a7632c54a36f3.png"
     ],
-    "lastModified": 1794726219,
+    "lastModified": 1794739446,
     "macros": {
     },
     "name": "AZOM Truck",
