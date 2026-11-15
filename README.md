@@ -107,6 +107,13 @@ Edit in MOZA Dashboard Studio, save so that `src/AZOM Truck/` holds the result, 
 - Studio copies each imported image into `Resource/MD5/` under its hash, so changing an image adds a new file.
   Delete the old file only once no `MD5/...` entry in the `.mzdash` `imageResources` list names it.
 - `lastModified` in the `.mzdash` changes on every save, so expect that line in every diff.
+- Every channel must be bound plainly by some element: `Telemetry.get("v1/gameData/<name>").value` as the whole
+  first method, with any calculation in a later method on `_result`. A channel read only inside a calculation does
+  not reach the wheel correctly: in 1.2.0 the gear lost its crawler and DD/OD text and the caution light stayed on.
+  The off-screen `Data <name>` labels below the canvas (y 300 and down) exist only to bind such channels. Add one
+  when new logic reads a channel nothing else binds, and never delete them as leftovers.
+- In calculations, read `.value` (not `?.value`) and test on/off channels with `Number(x) > 0`, not `!!x`, which is
+  true for the text `"0"`.
 
 Unlike the SimHub dashboard repos there is no link script: Pit House's installed copy
 (`%LOCALAPPDATA%\MOZA Pit House\_dashes\<id>\AZOM Truck\`) does not keep the `Resource/` folder, so it cannot simply be
